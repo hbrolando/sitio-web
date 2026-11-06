@@ -1,8 +1,9 @@
 from nicegui import ui
+import os  # Para leer variables del entorno
 
 @ui.page('/')
 def pagina_principal():
-    ui.label('Welcome').classes('text-2xl font-bold')
+    ui.label('¡Welcome').classes('text-2xl font-bold')
     ui.markdown('Contador')
     
     contador = {'valor': 0}
@@ -13,11 +14,13 @@ def pagina_principal():
         etiqueta.text = f'Contador: {contador["valor"]}'
         ui.notify('¡Sumaste 1!')
     
-    ui.button('Contar', on_click=incrementar, color='blue')
+    ui.button('Haz clic aquí', on_click=incrementar, color='blue')
 
-# Configuración para producción
+# Puerto automático: 8080 en local, el que asigne Render en la nube
+puerto = int(os.getenv('PORT', 8080))
+
 ui.run(
     host='0.0.0.0',
-    port=8080,
-    reload=False
+    port=puerto,
+    reload=True
 )
